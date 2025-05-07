@@ -44,7 +44,7 @@
 //                 icon:
 //                     enabled
 //                         ? Icon(Icons.check_box, size: 20)
-//                         : Icon(Icons.check_box_outline_blank, size: 20),
+//                         : Icon(Icons.check_box_outline_blank, size: 20), //enabled이 true일 때 ':' 기준 앞의 코드 실행, false이면 뒤의 코드 실행
 //                 color: Colors.red,
 //                 onPressed: changeCheck,
 //               ),
