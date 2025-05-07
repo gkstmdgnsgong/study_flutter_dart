@@ -33,7 +33,7 @@
 - [Flutter 공식 문서](https://flutter.dev/docs)
 - [Dart 공식 문서](https://dart.dev/guides)
 - [깡샘의 플러터 & 다트 프로그래밍 책 링크](#)
-
+- [실습 강의 제공](https://youtube.com/playlist?list=PLYlZbv3fX7WvBf2H_dt1RHV1my2pkm6m6&si=dW9ilwM3xcdoA69z) 
 ---
 
 이 저장소는 학습 목적으로 작성되었으며, 책의 내용을 기반으로 합니다.
