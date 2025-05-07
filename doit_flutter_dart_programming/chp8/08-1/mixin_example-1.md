@@ -63,8 +63,3 @@ class Bird extends Animal with Logger implements Flyable {
   }
 }
 ```
-
----
-
-필요하다면 각 구조의 장단점이나 구체적인 면접 질문 예제도 드릴 수 있어요.
-추가로 준비하고 싶은 주제가 있을까요?
