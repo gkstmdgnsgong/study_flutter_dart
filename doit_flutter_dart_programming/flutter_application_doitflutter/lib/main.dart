@@ -1,34 +1,70 @@
-//화면 구성 예
-//chp8 부터는 플러터 프로젝트 main.dart 파일에 복사, 붙여넣기로 실행 요망
+// mac: 'command + /' 로 주석을 해제해서 사용하세요
+// 예시 1: DiagnosticableTreeMixin 예시 – 트리 구조 표현(※ DiagnosticableTree는 직접 mixin할 수 없으므로 대신 사용)
 
 /*
-Myapp 클래스 : 앱 화면 전체 구성 위젯, StatelessWidget 상속
-  (08-3 상세 설명하겠지만 StatelessWidget을 상속 받은 위젯은 화면에 보일 뷰를 갱신할 수 없음 즉, 정적인 화면)
+Flutter 위젯 디버깅 시스템의 기반
+Widget, Element, RenderObject 등 Flutter의 거의 모든 핵심 클래스는 Diagnosticable 혹은 DiagnosticableTreeMixin을 믹스인으로 포함하고 있습니다.
 
-위젯 클래스 : 주요 작업은 다른 위젯을 계층으로 조합해 build() 함수를 구현
-  예제에서는 7개 위젯을 계층 조합하여 MyApp 클래스의 build() 함수 구현
-  - MaterialApp : 머티리얼 디자인 적용
-  - Scaffold : 화면 구조 설계
-  - AppBar : 화면 위쪽 앱바 구성
-  - Text : 앱바 제목
-  - Center : 가운데 정렬
-  - GestureDetector : 사용자 이벤트 처리
-  - Text : 본문에 문자열 출력
-*/
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
+abstract class Widget extends DiagnosticableTree {
+  // ...
 }
+🔎 이 덕분에 Flutter Inspector에서 위젯을 클릭하면 다음처럼 속성을 트리 구조로 확인할 수 있죠:
 
-class MyApp extends StatelessWidget {
+Padding
+ │ padding: EdgeInsets.all(8.0)
+ ╰ child: Text("Hello World")
+*/
+import 'package:flutter/foundation.dart';
+
+class Category with DiagnosticableTreeMixin {
+  //with : mixin 구조 //DiagnosticableTreeMixin은 Flutter에서 객체의 속성을 트리 구조로 디버깅 로그에 출력할 수 있게 해줍니다.
+  final String name;
+  final List<Category> subCategories;
+
+  Category(this.name, [this.subCategories = const []]);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Test')),
-        body: Center(child: GestureDetector(child: Text('Hello, World!'))),
-      ),
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('name', name));
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    return subCategories
+        .map((cat) => cat.toDiagnosticsNode(name: 'subCategory'))
+        .toList();
   }
 }
+
+void main() {
+  final category = Category('Books', [
+    Category('Fiction'),
+    Category('Non-fiction', [Category('Biography'), Category('Science')]),
+  ]);
+
+  debugPrint(
+    category.toStringDeep(),
+  ); // 트리 구조로 출력 //toStringDeep()를 통해 계층 구조를 시각화.
+}
+
+/*
+출력 결과
+
+flutter: Category#3dda7
+flutter:  │ name: "Books"
+flutter:  │
+flutter:  ├─subCategory: Category#8877f
+flutter:  │   name: "Fiction"
+flutter:  │
+flutter:  └─subCategory: Category#249a7
+flutter:    │ name: "Non-fiction"
+flutter:    │
+flutter:    ├─subCategory: Category#79086
+flutter:    │   name: "Biography"
+flutter:    │
+flutter:    └─subCategory: Category#c11c4
+flutter:        name: "Science"
+flutter:
+
+*/
