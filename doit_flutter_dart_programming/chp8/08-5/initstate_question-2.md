@@ -191,6 +191,6 @@ class ChangeNotifier {
 
 ---
 
-참고 문헌 : 
+이벤트 루프 기반 감지 관련 참고 문헌 : 
 https://velog.io/@osung/Flutter-이벤트-루프Event-Loop와-isolate
 https://gee6809.github.io/posts/event_loop/#google_vignette
