@@ -19,15 +19,13 @@ class _MyREDItemWidgetState extends State<MyREDItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Expanded(child: Container(color: color, height: 150, width: 150)),
-    );
+    return Expanded(child: Container(color: color, height: 150, width: 150));
   }
 }
 
 class MyBLUEItemWidget extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MyREDItemWidgetState(Colors.red);
+  State<StatefulWidget> createState() => _MyBLUEItemWidgetState(Colors.blue);
 }
 
 class _MyBLUEItemWidgetState extends State<MyBLUEItemWidget> {
@@ -36,8 +34,41 @@ class _MyBLUEItemWidgetState extends State<MyBLUEItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Expanded(child: Container(color: color, height: 150, width: 150));
+  }
+}
+
+void main() {
+  runApp(MyListWidget());
+}
+
+class MyListWidget extends StatefulWidget {
+  @override
+  State<MyListWidget> createState() => _MyListWidgetState();
+}
+
+class _MyListWidgetState extends State<MyListWidget> {
+  List<Widget> widgetList = [MyREDItemWidget(), MyBLUEItemWidget()];
+
+  onChange() {
+    setState(() {
+      widgetList.insert(1, widgetList.removeAt(0));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('print... ${widgetList.length}');
     return MaterialApp(
-      home: Expanded(child: Container(color: color, height: 150, width: 150)),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Key Test')),
+        body: Column(
+          children: [
+            Row(children: widgetList),
+            ElevatedButton(onPressed: onChange, child: Text('toggle')),
+          ],
+        ),
+      ),
     );
   }
 }
