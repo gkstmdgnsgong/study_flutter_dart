@@ -1,36 +1,57 @@
-//State의 생명 주기 함수 호출 시점
+//순서 바꾸기
 
 // mac: 'command + /' 로 주석을 해제해서 사용하세요
 //chp8 부터는 플러터 프로젝트 main.dart 파일에 복사, 붙여넣기로 실행 요망
 
 /*
+
 */
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-class _ChildWidgetState extends State<ChildWidget> {
+class MyColorItemWidget extends StatelessWidget {
+  Color color;
+  MyColorItemWidget(this.color);
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    return Expanded(child: Container(color: color, height: 150, width: 150));
   }
+}
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+void main() {
+  runApp(MyListWidget());
+}
 
+class MyListWidget extends StatefulWidget {
   @override
-  void dispose() {
-    super.dispose();
-  }
+  State<MyListWidget> createState() => _MyListWidgetState();
+}
 
-  @override
-  void didUpdateWidget(ChildWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
+class _MyListWidgetState extends State<MyListWidget> {
+  List<Widget> widgetList = [
+    MyColorItemWidget(Colors.red),
+    MyColorItemWidget(Colors.blue),
+  ];
+
+  onChange() {
+    setState(() {
+      widgetList.insert(1, widgetList.removeAt(0));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // 생략...
+    print('print... ${widgetList.length}');
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Key Test')),
+        body: Column(
+          children: [
+            Row(children: widgetList),
+            ElevatedButton(onPressed: onChange, child: Text('toggle')),
+          ],
+        ),
+      ),
+    );
   }
 }
