@@ -1,4 +1,4 @@
-//다른 타입의 StatefulWidget
+//StatefulWidget 위젯
 
 // mac: 'command + /' 로 주석을 해제해서 사용하세요
 //chp8 부터는 플러터 프로젝트 main.dart 파일에 복사, 붙여넣기로 실행 요망
@@ -6,35 +6,43 @@
 /*
 */
 
+// class MyColorItemWidget extends StatefulWidget {
+//   Color color;
+//   MyColorItemWidget(this.color, {Key? key}) : super(key: key);
+
+//   @override
+//   State<StatefulWidget> createState() => _MyColorItemWidgetState(color);
+// }
+
+// class _MyColorItemWidgetState extends State<MyColorItemWidget> {
+//   Color color;
+//   _MyColorItemWidgetState(this.color);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(child: Container(color: color, width: 150, height: 150));
+//   }
+// }
+
+//---실제 작동되는 코드
+
 import 'package:flutter/material.dart';
 
-class MyREDItemWidget extends StatefulWidget {
+class MyColorItemWidget extends StatefulWidget {
+  Color color;
+  MyColorItemWidget(this.color, {Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _MyREDItemWidgetState(Colors.red);
+  State<StatefulWidget> createState() => _MyColorItemWidgetState(color);
 }
 
-class _MyREDItemWidgetState extends State<MyREDItemWidget> {
+class _MyColorItemWidgetState extends State<MyColorItemWidget> {
   Color color;
-  _MyREDItemWidgetState(this.color);
+  _MyColorItemWidgetState(this.color);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Container(color: color, height: 150, width: 150));
-  }
-}
-
-class MyBLUEItemWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _MyBLUEItemWidgetState(Colors.blue);
-}
-
-class _MyBLUEItemWidgetState extends State<MyBLUEItemWidget> {
-  Color color;
-  _MyBLUEItemWidgetState(this.color);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(child: Container(color: color, height: 150, width: 150));
+    return Expanded(child: Container(color: color, width: 150, height: 150));
   }
 }
 
@@ -48,7 +56,10 @@ class MyListWidget extends StatefulWidget {
 }
 
 class _MyListWidgetState extends State<MyListWidget> {
-  List<Widget> widgetList = [MyREDItemWidget(), MyBLUEItemWidget()];
+  List<Widget> widgetList = [
+    MyColorItemWidget(Colors.red),
+    MyColorItemWidget(Colors.blue),
+  ];
 
   onChange() {
     setState(() {
