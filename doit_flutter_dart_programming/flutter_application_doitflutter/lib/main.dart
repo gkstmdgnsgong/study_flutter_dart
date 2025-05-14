@@ -57,8 +57,8 @@ class MyListWidget extends StatefulWidget {
 
 class _MyListWidgetState extends State<MyListWidget> {
   List<Widget> widgetList = [
-    MyColorItemWidget(Colors.red),
-    MyColorItemWidget(Colors.blue),
+    MyColorItemWidget(Colors.red, key: UniqueKey()),
+    MyColorItemWidget(Colors.blue, key: UniqueKey()),
   ];
 
   onChange() {
